@@ -14,7 +14,7 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.2.0.2');
   api.use('ecmascript');
-  api.addFiles('memjs.js');
+  api.addFiles('memjs.js', 'server');
   if ( api.export ) {
     api.export( 'MemJS', [ 'server' ] );
   }
