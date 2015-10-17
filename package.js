@@ -28,4 +28,7 @@ Package.onTest(function(api) {
   api.addFiles('memjs-tests.js');
 });
 
-Npm.depends({ 'memjs': '0.8.4' });
+Npm.depends({ 'memjs': '0.8.6' });
+
+// install newer version from github - http://stackoverflow.com/a/19360725/1898127
+//Npm.depends({ 'memjs': 'https://github.com/alevy/memjs/tarball/c8022f00d04f3de49f1c0da706405e8bd66d49b8' });

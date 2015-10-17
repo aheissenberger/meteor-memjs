@@ -26,9 +26,10 @@ MEMCACHIER_SERVERS, MEMCACHIER_USERNAME and MEMCACHIER_PASSWORD
 environment variables.
 
 ```javascript
-var client = MemJS.Client.create()
+var client = new MemJS()
 client.set('hello', 'world', 600);
-var result = client.get('hello')
+var result = client.get('hello');
+console.log(result.toString());
 ```
 
 Documentation can be found here: [http://amitlevy.com/projects/memjs/](http://amitlevy.com/projects/memjs/)
@@ -38,19 +39,18 @@ Documentation can be found here: [http://amitlevy.com/projects/memjs/](http://am
 ### Settings Values
 
 ``` javascript
-client.set('hello', 'world', function(err, val) {
-
-}, 600);
+client.set('hello', 'world', 600);
 ```
 
-The `set(key, val, callback, expiration)` function accepts the following parameters.
+The `set(key, val, expiration)` function accepts the following parameters.
 
 * `key`: key to set
 * `val`: value to set
-* `callback`: a callback invoked after the value is set
-  * `err` : error
-  * `val` : value retrieved
-* `expiration`: time interval, in seconds, after which memcached will expire the object
+* `expiration` [optional]: time interval, in seconds, after which memcached will expire the object
+
+*return*
+* true if successful
+* will throw an error of something goes wrong
 
 ### Getting Values
 
@@ -60,12 +60,29 @@ client.get('hello', function(err, val) {
 });
 ```
 
-The `get(key, callback)` function accepts the following parameters.
+The `get(key)` function accepts the following parameters.
 
 * `key`: key to retrieve
-* `callback`: a callback invoked after the value is retrieved
-  * `err` : error
-  * `val` : value retrieved
+
+*return*
+* value (Buffer Object) if successful - you need to convert it back to a String  
+* null if key does not exist
+* will throw an error of something goes wrong
+
+### all methodes ###
+|function|returns|description|
+|new MemJS( server, options )|Connection Object|initializes connection to Memcachier|
+|get( key )|value|get value for key, null if key does not exist|
+|set( key, value, expire )|success|set/overrides value of key|
+|add( key, value, expire )|success|set value of key, fails if key exists|
+|replace( key, value, expire )|success|set value of key, fails if key exists|
+|delete( key )|success|deletes key|
+|increment( key, amount, expire )|value|returns the value after the increment|
+|decrement( key, amount, expire )|success|returns the value after the decrement - success if OK - this is different to increment!!|
+|flush( )|success|Flushes the cache on each connected server|
+
+
+`expire` is optional, default can be set as option of `new MemJS` call
 
 ## Configuration ##
 
@@ -79,13 +96,24 @@ MemJS understands the following environment variables:
 
 Environment variables are only used as a fallback for explicit parameters.
 
+### specific Option of the Wrapper ###
+``` javascript
+var client = new MemJS('USERNAME:PASSWORD@SERVER:PORT',{EJSON:true});
+```
+
+The `EJSON:true` allows to store and retrieve Javascript Objects - please check Meteor [EJSON](http://docs.meteor.com/#/full/ejson) for more information.
+
 ## TODO
  * Functions with callback(err, para1, para2) do not work: GET, INCREMENT, STATS,
 
 ## Changelog
 
+### v0.0.2
+ * Convert Numbers to Strings
+
 ### v0.0.1
  * Initial release
+
 
 ## Copyright and license
 
