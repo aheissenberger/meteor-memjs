@@ -113,6 +113,9 @@ The `EJSON:true` allows to store and retrieve Javascript Objects - please check 
 
 ## Changelog
 
+### v0.0.3
+ * fix memjs.js loading on client
+
 ### v0.0.2
  * Convert Numbers to Strings
 
