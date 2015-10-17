@@ -70,16 +70,17 @@ The `get(key)` function accepts the following parameters.
 * will throw an error of something goes wrong
 
 ### all methodes ###
-|function|returns|description|
-|new MemJS( server, options )|Connection Object|initializes connection to Memcachier|
-|get( key )|value|get value for key, null if key does not exist|
-|set( key, value, expire )|success|set/overrides value of key|
-|add( key, value, expire )|success|set value of key, fails if key exists|
-|replace( key, value, expire )|success|set value of key, fails if key exists|
-|delete( key )|success|deletes key|
-|increment( key, amount, expire )|value|returns the value after the increment|
-|decrement( key, amount, expire )|success|returns the value after the decrement - success if OK - this is different to increment!!|
-|flush( )|success|Flushes the cache on each connected server|
+| function | returns | description |
+| -------- | ------- | ----------- |
+| new MemJS( server, options ) | Connection Object | initializes connection to Memcachier |
+| get( key ) | value | get value for key, null if key does not exist |
+| set( key, value, expire ) | success | set/overrides value of key |
+| add( key, value, expire ) | success | set value of key, fails if key exists |
+| replace( key, value, expire ) | success | set value of key, fails if key exists |
+| delete( key ) | success | deletes key |
+| increment( key, amount, expire ) | value | returns the value after the increment |
+| decrement( key, amount, expire ) | success | returns the value after the decrement - success if OK - this is different to increment!! |
+| flush( ) | success | Flushes the cache on each connected server |
 
 
 `expire` is optional, default can be set as option of `new MemJS` call
