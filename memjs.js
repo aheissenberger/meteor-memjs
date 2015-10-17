@@ -18,7 +18,11 @@ MemJS.prototype.get = function(key, callback) {
     } else {
         try {
             var wrapped = Meteor.wrapAsync(this._asyncAPI.get, this._asyncAPI);
-            return wrapped(key);
+            var value = wrapped(key);
+            if (value !== false) {
+              value = EJSON.parse(value.toString());
+            }
+            return value;
         } catch (error) {
             // A workaround for:
             // https://github.com/meteor/meteor/issues/2774
@@ -33,13 +37,14 @@ MemJS.prototype.get = function(key, callback) {
 
 
 MemJS.prototype.set = function(key,  value, expires, callback) {
+    var ejsonval = EJSON.stringify(value);
     if (callback && typeof callback === 'function') {
         // If anyone still wants to use old-fashioned callback method
-        this._asyncAPI.set(key,  value, callback, expires);
+        this._asyncAPI.set(key,  ejsonval, callback, expires);
     } else {
         try {
             var wrapped = Meteor.wrapAsync(this._asyncAPI.set, this._asyncAPI);
-            return wrapped(key,  value, callback, expires);
+            return wrapped(key,  ejsonval, callback, expires);
         } catch (error) {
             // A workaround for:
             // https://github.com/meteor/meteor/issues/2774
