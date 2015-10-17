@@ -104,9 +104,6 @@ var client = new MemJS('USERNAME:PASSWORD@SERVER:PORT',{EJSON:true});
 
 The `EJSON:true` allows to store and retrieve Javascript Objects - please check Meteor [EJSON](http://docs.meteor.com/#/full/ejson) for more information.
 
-## TODO
- * Functions with callback(err, para1, para2) do not work: GET, INCREMENT, STATS,
-
 ## Changelog
 
 ### v0.0.2
