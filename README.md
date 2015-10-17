@@ -109,6 +109,7 @@ var client = new MemJS('USERNAME:PASSWORD@SERVER:PORT',{EJSON:true});
 ```
 
 The `EJSON:true` allows to store and retrieve Javascript Objects - please check Meteor [EJSON](http://docs.meteor.com/#/full/ejson) for more information.
+`$ meteor add ejson` is required to use this option
 
 ## Changelog
 
