@@ -1,25 +1,26 @@
 var Future = Npm.require('fibers/future');
+
 var getSettingsValueFor = function(key) {
     if (Meteor.settings && Meteor.settings.private && Meteor.settings.private.MemJS) {
         return Meteor.settings.private.MemJS[key];
     }
 };
 MemJS = function(serversStr, options) {
-    var serversStr = serversStr || getSettingsValueFor('servers'); // fallback on the MEMCACHIER_SERVERS environment variable
-    var options = options || getSettingsValueFor('options');
+    serversStr = serversStr || getSettingsValueFor('servers'); // fallback on the MEMCACHIER_SERVERS environment variable
+    options = options || getSettingsValueFor('options');
     if (options && options.EJSON) {
         this.EJSON = options.EJSON;
     } else {
         this.EJSON = false;
     }
     this._asyncAPI = Npm.require('memjs').Client.create(serversStr, options);
-}
+};
 MemJS.prototype.parse = function(value) {
     return (this.EJSON ? EJSON.parse(value.toString()) : value);
-}
+};
 MemJS.prototype.stringify = function(value) {
     return (this.EJSON ? EJSON.stringify(value) : (typeof(value !== 'string') ? value.toString() : value));
-}
+};
 MemJS.prototype.get = function(key, callback) {
     if (callback && typeof callback === 'function') {
         // If anyone still wants to use old-fashioned callback method
@@ -42,7 +43,7 @@ MemJS.prototype.get = function(key, callback) {
             }
         }
     }
-}
+};
 MemJS.prototype.set = function(key, value, expires, callback) {
     if (callback && typeof callback === 'function') {
         // If anyone still wants to use old-fashioned callback method
@@ -56,10 +57,10 @@ MemJS.prototype.set = function(key, value, expires, callback) {
             } else {
                 future.return(success);
             }
-        }), expires)
+        }), expires);
         return future.wait();
     }
-}
+};
 MemJS.prototype.add = function(key, value, expires, callback) {
     if (callback && typeof callback === 'function') {
         // If anyone still wants to use old-fashioned callback method
@@ -73,10 +74,10 @@ MemJS.prototype.add = function(key, value, expires, callback) {
             } else {
                 future.return(success);
             }
-        }), expires)
+        }), expires);
         return future.wait();
     }
-}
+};
 MemJS.prototype.replace = function(key, value, expires, callback) {
     if (callback && typeof callback === 'function') {
         // If anyone still wants to use old-fashioned callback method
@@ -90,10 +91,10 @@ MemJS.prototype.replace = function(key, value, expires, callback) {
             } else {
                 future.return(success);
             }
-        }), expires)
+        }), expires);
         return future.wait();
     }
-}
+};
 MemJS.prototype.delete = function(key, callback) {
     if (callback && typeof callback === 'function') {
         // If anyone still wants to use old-fashioned callback method
@@ -112,7 +113,7 @@ MemJS.prototype.delete = function(key, callback) {
             }
         }
     }
-}
+};
 MemJS.prototype.increment = function(key, amount, expires, callback) {
     if (callback && typeof callback === 'function') {
         // If anyone still wants to use old-fashioned callback method
@@ -127,10 +128,10 @@ MemJS.prototype.increment = function(key, amount, expires, callback) {
             } else {
                 future.return(success);
             }
-        }), expires)
+        }), expires);
         return future.wait();
     }
-}
+};
 MemJS.prototype.decrement = function(key, amount, expires, callback) {
     if (callback && typeof callback === 'function') {
         // If anyone still wants to use old-fashioned callback method
@@ -143,10 +144,10 @@ MemJS.prototype.decrement = function(key, amount, expires, callback) {
             } else {
                 future.return(success);
             }
-        }), expires)
+        }), expires);
         return future.wait();
     }
-}
+};
 MemJS.prototype.flush = function(callback) {
     if (callback && typeof callback === 'function') {
         // If anyone still wants to use old-fashioned callback method
@@ -158,10 +159,10 @@ MemJS.prototype.flush = function(callback) {
                 lastErr: lastErr,
                 result: result
             });
-        }))
+        }));
         return future.wait();
     }
-}
+};
 MemJS.prototype.stats = function(callback) {
     if (callback && typeof callback === 'function') {
         // If anyone still wants to use old-fashioned callback method
@@ -183,10 +184,10 @@ MemJS.prototype.stats = function(callback) {
                     future.return(result);
                 }
             }
-        }))
+        }));
         return future.wait();
     }
-}
+};
 MemJS.prototype.perform = function(key, request, retries, callback) {
     if (callback && typeof callback === 'function') {
         // If anyone still wants to use old-fashioned callback method
@@ -205,7 +206,7 @@ MemJS.prototype.perform = function(key, request, retries, callback) {
             }
         }
     }
-}
+};
 MemJS.prototype.close = function() {
     this._asyncAPI.close();
-}
+};
