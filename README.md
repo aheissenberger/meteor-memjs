@@ -4,6 +4,8 @@ A Meteor wrapper for MemJS a pure Node.js client library for using memcache, in 
 [MemCachier](http://memcachier.com/) service. It
 uses the binary protocol and support SASL authentication.
 
+MemCachier is the Memcache Add-On provided by [cloudcontroll](http://www.cloudcontrolled.com) which supports Meteor hosting with a custom [buildpack](https://github.com/aheissenberger/cloudcontrol-buildpack-meteor).
+
 ## Dependencies
 
  * [memjs](https://github.com/alevy/memjs) - A memcache client for node using the binary protocol and SASL authentication
@@ -80,8 +82,12 @@ The `get(key)` function accepts the following parameters.
 | delete( key ) | success | deletes key |
 | increment( key, amount, expire ) | value | returns the value after the increment |
 | decrement( key, amount, expire ) | success | returns the value after the decrement - success if OK - this is different to increment!! |
-| flush( ) | success | Flushes the cache on each connected server |
+| stats( ) | {server, stats} | Fetches memcache stats from each connected server |
+| flush( ) | {lastErr, results} | Flushes the cache on each connected server |
+| close( ) | success | Closes connections to all the servers |
 
+*input:* `value` will allways coverted to string - you can change this with this [option](#specific-option-of-the-wrapper)
+*output:* `value` will allways be a Buffer Value - use to String to covert it
 
 `expire` is optional, default can be set as option of `new MemJS` call
 
