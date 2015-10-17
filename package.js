@@ -2,7 +2,7 @@ Package.describe({
   name: 'aheissenberger:memjs',
   version: '0.0.2',
   // Brief, one-line summary of the package.
-  summary: 'A Meteor wrapper for memjs memcache client with binary protocol and SASL authentication for MemCachier',
+  summary: 'Meteor wrapper for memjs memcache client with binary protocol, SASL authentication for MemCachier',
   // URL to the Git repository containing the source code for this package.
   git: 'https://github.com/aheissenberger/meteor-memjs.git',
   author: 'Andreas Heissenberger (http://www.heissenberger.at)',
